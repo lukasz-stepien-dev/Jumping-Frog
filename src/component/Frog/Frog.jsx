@@ -1,5 +1,5 @@
-import frogImg from './img/frog.png';
-import './css/Frog.css';
+import frogImg from './frog.png';
+import './Frog.css';
 import {useState} from "react";
 export default function Frog() {
     const [isJump, setJump] = useState('');

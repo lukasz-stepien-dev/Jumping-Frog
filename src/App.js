@@ -1,6 +1,6 @@
-import "./css/App.css";
-import Instruction from "./Instruction";
-import Frog from "./Frog";
+import "./App.css";
+import Instruction from "./component/Instruction/Instruction";
+import Frog from "./component/Frog/Frog";
 
 export default function App() {
   return (
