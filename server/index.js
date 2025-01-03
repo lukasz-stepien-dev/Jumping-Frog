@@ -49,9 +49,9 @@ socketIO.on('connection', (socket) => {
         socket.join(room);
     });
 
-    socket.on('jump', (room) => {
-        console.log(`👟: ${socket.id} jumped to room ${room}`);
-        socket.broadcast.to(room).emit('jump');
+    socket.on('jump', (userId, room) => {
+        console.log(`👟: ${userId} jumped to room ${room}`);
+        socket.broadcast.to(room).emit('jump', userId);
     });
 
     socket.on('disconnect', () => {
