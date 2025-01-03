@@ -1,19 +1,15 @@
 const express = require('express');
 const app = express();
+const PORT = 3000;
+
+// New imports
 const http = require('http').Server(app);
 const cors = require('cors');
 const socketIO = require('socket.io')(http, {
     cors: {
-        origin: process.env.NODE_ENV === 'production' ? 'https://jumping-frog.onrender.com:80' : 'http://localhost:3000'
+        origin: "http://localhost:3000"
     }
 });
-
-// Load environment variables
-require('dotenv').config({
-    path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env'
-});
-
-const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
@@ -39,6 +35,7 @@ socketIO.on('connection', (socket) => {
         console.log(`🚪: ${socket.id} joined room ${room}`);
         socket.to(room).emit('userJoined');
         socket.join(room);
+
     });
 
     socket.on('create', () => {
