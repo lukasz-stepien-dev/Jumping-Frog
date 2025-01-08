@@ -1,15 +1,19 @@
 const express = require('express');
 const app = express();
-const PORT = 3000;
-
-// New imports
 const http = require('http').Server(app);
 const cors = require('cors');
 const socketIO = require('socket.io')(http, {
     cors: {
-        origin: "http://localhost:3000"
+        origin: process.env.CORS_ORIGIN
     }
 });
+
+// Load environment variables
+const dotenv = require('dotenv');
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
+dotenv.config({ path: envFile });
+
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
@@ -35,7 +39,6 @@ socketIO.on('connection', (socket) => {
         console.log(`🚪: ${socket.id} joined room ${room}`);
         socket.to(room).emit('userJoined');
         socket.join(room);
-
     });
 
     socket.on('create', () => {
