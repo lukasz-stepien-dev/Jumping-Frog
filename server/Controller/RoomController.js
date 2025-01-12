@@ -55,7 +55,7 @@ class RoomController {
             console.log(`🏠: ${socket.id} created room ${roomName}`);
             socket.join(roomName);
             this.addUserToRoom.execute(roomName, socket.id);
-            callback({ status: 'success', room: roomName})
+            callback({ status: 'success', room: roomName});
         });
     }
 }

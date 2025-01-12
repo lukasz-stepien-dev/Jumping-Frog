@@ -3,9 +3,9 @@ class AddUserToRoom {
         this.roomRepository = roomRepository;
     }
 
-    execute(roomID, user) {
-        const room = this.roomRepository.findByID(roomID);
-        room.addUser(user);
+    execute(roomName, user) {
+        const room = this.roomRepository.findByName(roomName);
+        this.roomRepository.addUser(room, user);
         this.roomRepository.save(room);
     }
 }
