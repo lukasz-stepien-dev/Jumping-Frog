@@ -1,3 +1,4 @@
+// RoomController.js
 const CreateRoom = require('../UseCase/CreateRoom');
 const GetRoom = require('../UseCase/GetRoom');
 const AddUserToRoom = require('../UseCase/AddUserToRoom');
@@ -9,10 +10,9 @@ class RoomController {
     }
 
     generateRoomName() {
-        let roomName = "";
+        let roomName;
         do {
-            roomName = Math.floor(Math.random() * 100);
-            roomName.toString().padStart(2, "0");
+            roomName = Math.floor(Math.random() * 100).toString().padStart(2, '0');
         } while (this.roomRepository.isRoomExist(roomName));
         return roomName;
     }
@@ -40,22 +40,21 @@ class RoomController {
 
             console.log(`🚪: ${socket.id} joined room ${room}`);
             this.addUserToRoom.execute(room, socket.id);
-
-            socket.to(room).emit('userJoined');
+            socket.to(room).emit('userJoined', { userId: socket.id });
             socket.join(room);
             callback({ status: 'success' });
         });
     }
 
     createRoom(socket) {
-        socket.on('create' , (callback) => {
+        socket.on('create', (callback) => {
             const roomName = this.generateRoomName();
             const createRoom = new CreateRoom(this.roomRepository);
             createRoom.execute({ name: roomName, owner: socket.id });
             console.log(`🏠: ${socket.id} created room ${roomName}`);
             socket.join(roomName);
             this.addUserToRoom.execute(roomName, socket.id);
-            callback({ status: 'success', room: roomName});
+            callback({ status: 'success', room: roomName });
         });
     }
 }
