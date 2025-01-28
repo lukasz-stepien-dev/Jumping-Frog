@@ -89,7 +89,7 @@ describe('RoomController', () => {
     });
 
     test('should handle createRoom event successfully', () => {
-        roomRepository.isRoomExist.mockReturnValue(false)l
+        roomRepository.isRoomExist.mockReturnValue(false)
         const callback = jest.fn();
 
         roomController.createRoom(socket);
